@@ -1,15 +1,17 @@
 // Libraries
-import React from 'react';
+import React, { Fragment } from 'react';
 
 // Modules
-
+import Filters from './Components/Filters/Filters';
+import Cards from './Components/Cards/Cards';
 
 const App = () => {
 
     return(
-        <div>
-            App
-        </div>
+        <Fragment>
+            <Filters />
+            <Cards />
+        </Fragment>
     );
 };
 
