@@ -132,17 +132,19 @@ h1 {
    border-top-left-radius: .5rem;
    border-top-right-radius: .5rem;
 }
-.tasklist-item:last-of-type {
-   border-bottom-left-radius: .5rem;
-   border-bottom-right-radius: .5rem;
-}
 
 .tasklist-item {
    width: 100%;
    border: 1px solid grey;
+   border-bottom: none;
    background-color: #fff;
    display: flex;
    margin-bottom: 0;
+}
+.tasklist-item:last-of-type {
+   border-bottom-left-radius: .5rem;
+   border-bottom-right-radius: .5rem;
+   border-bottom: 1px solid grey;
 }
 
 .tasklist-item .details {
@@ -165,6 +167,10 @@ h1 {
 
 .modalOpen {
    border: none;
+}
+.modal.hide,
+.modal.hide .screen {
+   display: none;
 }
 
 .modal.show {
@@ -219,4 +225,9 @@ h1 {
 
 .screen .actions {
    margin: 20px 0 10px;
+   display: flex;
+   justify-content:space-between;
+}
+.screen .actions .end {
+   margin-right: 33px;
 }
