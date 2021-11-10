@@ -1,0 +1,222 @@
+/* General Mega Style - buttons */
+
+:root {
+	/* Nav */
+	--ultraBlue-bg-color: rgba(239,239,239,1) ;
+	/* .link */
+	--ultraBlue-link-fontSize: 16px;
+	--ultraBlue-link-fontWeight: 400;
+	--ultraBlue-link-fontWeight-hover: 600;
+	--ultraBlue-link-letterSpacing: 0;
+	--ultraBlue-link-fontColor: #ffffff;
+	--ultraBlue-link-textShadow: rgba(81,81,81,1);
+	--ultraBlue-link-textShadow-hover: rgba(81,81,81,1);
+	/* .btn */
+	--ultraBlue-btn-bgColor: rgba(95,183,207,1);
+	--ultraBlue-btn-bgColor-hover: rgba(39,106,145,1);
+	--ultraBlue-btn-borderColor: rgba(95,183,207,1);
+	--ultraBlue-btn-boxShadow: rgba(19,19,19,0.5);
+	--ultraBlue-btn-boxShadow-hover: rgba(19,19,19,8);
+}
+
+.btn {
+	position: relative;
+	background-color: var(--ultraBlue-btn-bgColor);
+	border: 3px solid var(--ultraBlue-btn-borderColor);
+   color: var(--ultraBlue-link-fontColor);
+   font-size: var(--ultraBlue-link-fontSize);
+   padding: 10px 20px;
+	margin: 5px 5px;
+	box-shadow: 8px 8px 4px -7px var(--ultraBlue-btn-boxShadow);
+	transition: all ease-in-out 0.15s;
+   z-index: 1;
+}
+.btn:before {
+	position: absolute;
+	content: ' ';
+	bottom: -5px;
+	left: -10px;
+	border-left: 10px solid transparent;
+	border-right: 10px solid transparent;
+	border-top: 10px solid var(--ultraBlue-bg-color);
+	transform: rotate(45deg);
+}
+.btn:after {
+	position: absolute;
+	content: ' ';
+	top: -5px;
+	right: -10px;
+	border-left: 10px solid transparent;
+	border-right: 10px solid transparent;
+	border-bottom: 10px solid var(--ultraBlue-bg-color);
+	transform: rotate(45deg);
+}
+
+.btn:hover, 
+.btn:active {
+   border: 3px solid var(--ultraBlue-btn-bgColor-hover);
+	background-color: var(--ultraBlue-btn-bgColor-hover);
+   color: #fff;
+}
+
+input, select, textarea {
+   font-size: 16px;
+   padding: 4px 6px;
+   border-radius: .5rem;
+   border: 1px solid lightgrey;
+}
+
+textarea {
+   width: 95%;
+   height: 80px;
+   resize: none;
+   padding: 10px;
+}
+
+
+* { 
+   box-sizing: border-box;
+}
+
+html, body {
+   padding: 0;
+   margin: 0;
+   background-color: var(--ultraBlue-bg-color);
+}
+
+h1, h2, h3, h4, h5, h6, 
+p, a, 
+span, div,
+button, input, select {
+   font-family: 'Ubuntu', sans-serif;
+   margin-bottom: 10px;
+}
+
+#root {
+   display: flex;
+   width: 100%;
+   justify-content: center;
+}
+
+.container {
+   width: 800px;
+   max-width: 100%;
+}
+
+h1 {
+   text-align: center;
+}
+.details {
+   display: flex;
+}
+.details div {
+   width: 49%;
+   margin: 0 0 20px 1%;
+}
+.details div:first-of-type {
+   margin: 0 1% 20px 0;
+}
+
+.details input {
+   width: 100%;
+   padding-left: 10px;
+}
+
+.details select {
+   width: 100%;
+}
+
+/* Related to TaskList/TaskItem Components */
+
+.tasklist-item:first-of-type {
+   border-top-left-radius: .5rem;
+   border-top-right-radius: .5rem;
+}
+.tasklist-item:last-of-type {
+   border-bottom-left-radius: .5rem;
+   border-bottom-right-radius: .5rem;
+}
+
+.tasklist-item {
+   width: 100%;
+   border: 1px solid grey;
+   background-color: #fff;
+   display: flex;
+   margin-bottom: 0;
+}
+
+.tasklist-item .details {
+   padding: 10px 0 10px 15px;
+   margin: 0;
+}
+.tasklist-item .details h4 {
+   margin: 0 0 5px;
+   font-size: 1.2rem;
+   font-weight: 400;
+}
+.tasklist-item .details p {
+   font-size: 1rem;
+   font-weight: 400;
+   margin: 0;
+   color: grey;
+}
+
+/* Related to Task component */
+
+.modalOpen {
+   border: none;
+}
+
+.modal.show {
+   position: absolute;
+   z-index: 3;
+   top: 0;
+   left: 0;
+   width: 100%;
+   height: 100%;
+   background-color: #f1f1f1f1;
+   display: flex;
+   justify-content: center;
+}
+
+.screen {
+   width: 800px;
+   background-color: #fff;
+   border: 2px solid #f1f1f1;
+   box-shadow: 0 0 6px 4px lightgrey;
+   border-radius: .5rem;
+   padding: 20px 30px;
+   margin: auto;
+}
+.screen h2 {
+   margin: 0 0 20px;
+   font-size: 1.5rem;
+}
+
+.screen h3 {
+   font-weight: 300;
+   margin: 0 0 10px;
+}
+
+.screen .task-details {
+   display: flex;
+   flex-flow: row wrap;
+}
+.screen .task-details div {
+   width: 50%;
+}
+.screen .task-details input {
+   width: 90%;
+   padding: 8px;
+}
+
+.screen .btn:before {
+	border-top: 10px solid #fff;
+}
+.screen .btn:after {
+	border-bottom: 10px solid #fff;
+}
+
+.screen .actions {
+   margin: 20px 0 10px;
+}
