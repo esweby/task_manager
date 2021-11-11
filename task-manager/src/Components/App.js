@@ -219,7 +219,7 @@ class App extends Component {
                task={this.state.task} />
             <div className="container">
                <h1>TaskMaster</h1>
-               <h3>Details</h3>
+               <h2>Details</h2>
                <section className="details">
                   <Input 
                      name="name" 

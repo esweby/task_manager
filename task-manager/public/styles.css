@@ -92,6 +92,23 @@ button, input, select {
    margin-bottom: 10px;
 }
 
+h1 {
+   font-size: 2.25rem;
+   font-weight: 500;
+   margin: 1rem 0;
+}
+
+h2 {
+   font-size: 2rem;
+   font-weight: 500;
+   margin: 0 0 1rem;
+}
+
+h3, h4 {
+   margin-top: 0;
+   font-weight: 300;
+}
+
 #root {
    display: flex;
    width: 100%;
@@ -238,7 +255,7 @@ h1 {
 }
 
 .screen .actions {
-   margin: 20px 0 10px;
+   margin: 25px 0 0;
    display: flex;
    justify-content:space-between;
 }
