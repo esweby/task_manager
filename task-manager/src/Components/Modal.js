@@ -14,7 +14,7 @@ const Modal = ({
    return(
       <div className={`modal ${extraClass}`} onClick={e => closeModal(e)}>
          <div className="screen">
-            <h2>{`${action.split('')[0].toUpperCase()}${action.slice(1)}`} a Task</h2>
+            <h2>{`${action.split('')[0].toUpperCase()}${action.slice(1)}`} Task</h2>
             <section className="task-details">
                <Input 
                   name="link" 
@@ -48,11 +48,20 @@ const Modal = ({
             <section className="actions">
                <div>
                   <Button text='Cancel' action={e => closeModal(e)} classes="close" />
-                  {action === 'update' ? <Button text='Delete' action={e => closeModal(e)} classes="delete" /> : null}
+                  {action === 'edit' ? <Button text='Delete' action={e => saveTask(e)} classes="delete" /> : null}
                </div>
                <div className="end">
-                  {action === 'update' ? <Button text='Archive' action={console.log} classes="archive" /> : null}
-                  <Button text='Save' action={e => saveTask(e)} classes="save"  />
+                  {
+                     action === 'edit' ? 
+                        <Button text='Archive' action={e => saveTask(e)} classes="archive" /> 
+                        : null
+                  }
+                  {
+                     action === 'edit' ? 
+                        <Button text='Save' action={e => saveTask(e)} classes="edit"  /> : 
+                        <Button text='Save' action={e => saveTask(e)} classes="save"  />
+                  }
+                  
                </div>
             </section>
          </div>

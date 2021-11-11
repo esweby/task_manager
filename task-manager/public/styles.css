@@ -128,6 +128,10 @@ h1 {
 
 /* Related to TaskList/TaskItem Components */
 
+.tasklist {
+   margin: 10px 0 20px;
+}
+
 .tasklist-item:first-of-type {
    border-top-left-radius: .5rem;
    border-top-right-radius: .5rem;
@@ -140,6 +144,8 @@ h1 {
    background-color: #fff;
    display: flex;
    margin-bottom: 0;
+   display: flex;
+   justify-content: space-between;
 }
 .tasklist-item:last-of-type {
    border-bottom-left-radius: .5rem;
@@ -148,6 +154,8 @@ h1 {
 }
 
 .tasklist-item .details {
+   display: flex;
+   flex-flow: column;
    padding: 10px 0 10px 15px;
    margin: 0;
 }
@@ -161,6 +169,10 @@ h1 {
    font-weight: 400;
    margin: 0;
    color: grey;
+}
+.tasklist-item .btn {
+   margin-right: 30px;
+   padding: 6px 20px;
 }
 
 /* Related to Task component */
@@ -216,10 +228,12 @@ h1 {
    padding: 8px;
 }
 
-.screen .btn:before {
+.screen .btn:before,
+.tasklist-item .btn:before {
 	border-top: 10px solid #fff;
 }
-.screen .btn:after {
+.screen .btn:after,
+.tasklist-item .btn:after {
 	border-bottom: 10px solid #fff;
 }
 

@@ -7,6 +7,8 @@ import Button from './elements/Button';
 import Modal from './Modal';
 import TaskItem from './TaskItem';
 
+import { DragDropContext, Droppable, Draggable } from 'react-beautiful-dnd';
+
 class App extends Component {
    constructor(props) {
       super(props)
@@ -99,21 +101,49 @@ class App extends Component {
    }
 
    saveTask = e => {
-      e.stopPropagation();
       const { link, company, type, status, completionDate } = this.state.task;
-      if(!link || !status) return;
-      this.setState(
-         { 
-            tasklist: [ 
-               ...this.state.tasklist, 
-               {
-                  id: `task-${this.state.tasklist.length}-${company}`,
-                  link, company, type, status, completionDate
-               }
-            ]
-         }, 
+      const { id = `task-${this.state.tasklist.length}-${company}` } = this.state.task;
+      e.stopPropagation();
+      if(e.target.classList.contains('save')) {
+         if(!link || !status) return;
+         this.setState(
+            { 
+               tasklist: [ 
+                  ...this.state.tasklist, 
+                  {
+                     id: `task-${this.state.tasklist.length}-${company}`, 
+                     link, company, type, status, completionDate
+                  }
+               ]
+            }, 
          () => this.updateLocalFromState());
-      this.closeModal(e)
+      }
+      if(e.target.classList.contains('edit')) {
+         const updateTask = { id, link, company, type, status, completionDate };
+         this.setState(
+            { tasklist: 
+               [
+                  ...this.state.tasklist.map(task => {
+                     if(task.id === updateTask.id) {
+                        return updateTask
+                     }
+                     return task;
+                  })
+               ]
+            }, 
+         () => this.updateLocalFromState());
+      }
+      if(e.target.classList.contains('delete')) {
+         console.log(id);
+         this.setState(
+            { tasklist: 
+               [
+                  ...this.state.tasklist.filter(task => task.id !== id)
+               ]
+            }, 
+         () => this.updateLocalFromState());
+      }
+      this.closeModal(e);
    }
 
    // --------------------------------------- Managing Modal
@@ -144,11 +174,27 @@ class App extends Component {
    closeModal = e => {
       if(e.target.classList.contains('modal') ||
          e.target.classList.contains('close') ||
-         e.target.classList.contains('save')) {
+         e.target.classList.contains('save') ||
+         e.target.classList.contains('edit') ||
+         e.target.classList.contains('delete')) {
             e.stopPropagation();
             this.setState({ modal: 'hide', modalAction: 'hidden' });
       }
    }
+
+   // --------------------------------------- Drag and Drop
+
+   handleDragEnd = async (result) => {
+      if (!result.destination) return;
+
+      const items = Array.from(this.state.tasklist);
+      const [reorderedItem] = items.splice(result.source.index, 1);
+      items.splice(result.destination.index, 0, reorderedItem);
+
+      await this.setState({ tasklist: [ ...items ]});
+      this.updateLocalFromState();
+   }
+
 
    // --------------------------------------- Lifecycle Methods
 
@@ -161,7 +207,6 @@ class App extends Component {
    componentDidUpdate() {
       if(this.state.name !== this.state.ls.name ||
          this.state.workload !== this.state.ls.workload) this.updateLocalFromState();
-      // console.log(this.state);
    }
 
    render() {
@@ -194,18 +239,32 @@ class App extends Component {
                      action={() => this.createModal('create')} 
                      classes='' />
                </section>
-               <section className="tasklist">
-                  {
-                     this.state.tasklist.length > 0 ?
-                        this.state.tasklist.map(task => 
-                           <TaskItem 
-                              key={task.id}
-                              task={task} 
-                              openModal={this.createModal} />) :
-                        <h4>Create a task! What are you waiting for?</h4>
-
-                  }
-               </section>
+               <DragDropContext onDragEnd={this.handleDragEnd}>
+                  <Droppable droppableId="tasks">
+                     {(provided) => (
+                        <section className="tasklist" 
+                           {...provided.droppableProps} 
+                           ref={provided.innerRef}
+                        >
+                           {
+                              this.state.tasklist.map((task, index) => {
+                                 return (
+                                    <Draggable key={task.id} draggableId={task.id} index={index}>
+                                       {(provided) => (
+                                          <div ref={provided.innerRef} {...provided.draggableProps} {...provided.dragHandleProps}>
+                                             <TaskItem 
+                                                key={task.id}
+                                                task={task} 
+                                                openModal={this.createModal} />
+                                          </div>)}
+                                    </Draggable>
+                              )})
+                           }
+                           {provided.placeholder}
+                        </section>
+                     )}
+                  </Droppable>
+               </DragDropContext>
             </div>
          </Fragment>
       )

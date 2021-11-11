@@ -1,4 +1,5 @@
 import React from 'react';
+import Button from './elements/Button';
 
 const TaskItem = ({ task, openModal }) => {
     return(
@@ -7,7 +8,7 @@ const TaskItem = ({ task, openModal }) => {
                 <h4>{task.link} - {task.company}</h4>
                 <p>{task.status}</p>
             </div>
-            <button onClick={() => openModal('edit', task)}>Edit</button>
+            <Button text='Edit' action={() => openModal('edit', task)} />
         </div>
     );
 }
