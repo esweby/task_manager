@@ -7,7 +7,7 @@ const Input = ({ name, content, options, update }) => {
          <h3>{`${name.split('')[0].toUpperCase()}${name.slice(1)}`}</h3>
          <select name={name} value={content} onChange={e => update(e.target.value, name)}>
             <option value>Please pick a value</option>
-            {options.map(option => <option key={option} value={`${option.split(' ')[0]}`}>{option}</option>)}
+            {options.map(option => <option key={option} value={`${option}`}>{option}</option>)}
          </select>
       </div>
    )

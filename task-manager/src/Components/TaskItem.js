@@ -4,14 +4,17 @@ import Detail from './elements/Detail'
 
 const TaskItem = ({ task, openModal }) => {
     return(
-        <div className="tasklist-item">
-            <div className="logo" alttext={task.company}>
-                {task.company.slice(0, 2).toUpperCase()}
-            </div>
+        <div className="tasklistItem">
             <div className="details">
-                <Detail detailType="link" detailName="Clarizen" detailContent={task.link} extraClass='small' />
-                <Detail detailName="Task" detailContent={task.type} extraClass='small' />
-                <Detail detailName="Due Date" 
+                <section>
+                    <Detail detailName="Name" detailContent={task.company} extraClass='small' />:&nbsp; 
+                    <Detail detailName="Task" detailContent={task.type} extraClass='small' /> 
+                </section>
+                <section>
+                    <Detail detailType="link" detailName="Clarizen" detailContent={task.link} extraClass='small' />
+                </section>
+                <section>
+                <strong>Due:</strong>&nbsp;<Detail detailName="Due Date" 
                             detailContent={
                                 `${
                                     new Date(task.completionDate).getDate()
@@ -19,7 +22,8 @@ const TaskItem = ({ task, openModal }) => {
                                     new Date(task.completionDate).getMonth() + 1
                                 }/${new Date(task.completionDate).getFullYear()}`} 
                         extraClass=''/>
-                <Detail detailContent={task.status} extraClass='full' />
+                </section>
+                <strong>Status:</strong> <Detail detailContent={task.status} extraClass='full' />
             </div>
             <Button text='Edit' action={() => openModal('edit', task)} />
         </div>

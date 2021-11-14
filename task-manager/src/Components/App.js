@@ -6,6 +6,7 @@ import Button from './elements/Button';
 
 import Modal from './Modal';
 import TaskItem from './TaskItem';
+import ArchivedTask from './ArchivedTask';
 
 import { DragDropContext, Droppable, Draggable } from 'react-beautiful-dnd';
 
@@ -22,6 +23,7 @@ class App extends Component {
             company: '',
             type: '',
             status: '',
+            blocked: false,
             completionDate: `${new Date().getFullYear()}-${String(new Date().getMonth() + 1).padStart(2, '0')}-${String(new Date().getDate()).padStart(2, '0')}`
          },
          name: '',
@@ -73,35 +75,40 @@ class App extends Component {
       }
    }
 
-   updateTask = (newVal, name) => {
+   updateTask = async (newVal, name) => {
       switch(name) {
-         case 'link': 
+         case 'Clarizen': 
             if(newVal === this.state.task.link) return;
-            this.setState({ task: { ...this.state.task, link: newVal } });
+            await this.setState({ task: { ...this.state.task, link: newVal } });
             break;
-         case 'company':
+         case 'company Name':
             if(newVal === this.state.task.company) return;
-            this.setState({ task: { ...this.state.task, company: newVal } });
+            await this.setState({ task: { ...this.state.task, company: newVal } });
             break;
-         case 'type':
+         case 'Task Name':
             if(newVal === this.state.task.type) return;
-            this.setState({ task: { ...this.state.task, type: newVal } });
+            await this.setState({ task: { ...this.state.task, type: newVal } });
             break;
          case 'status':
             if(newVal === this.state.task.status) return;
-            this.setState({ task: { ...this.state.task, status: newVal } });
+            await this.setState({ task: { ...this.state.task, status: newVal } });
             break;
-         case 'completion date':
+         case 'Blocked':
+            console.log(newVal);
+            if(newVal === this.state.task.status) return;
+            await this.setState({ task: { ...this.state.task, blocked: newVal } });
+            break;
+         case 'Due date':
             if(newVal === this.state.task.completionDate) return;
-            this.setState({  task: { ...this.state.task, completionDate: newVal }  });
+            await this.setState({  task: { ...this.state.task, completionDate: newVal }  });
             break;
          default:
             console.error({ name, newVal });
       }
    }
 
-   saveTask = e => {
-      const { link, company, type, status, completionDate } = this.state.task;
+   saveTask = async e => {
+      const { link, company, type, blocked, status, completionDate } = this.state.task;
       const { id = `task-${this.state.tasklist.length}-${company}` } = this.state.task;
       e.stopPropagation();
       if(e.target.classList.contains('save')) {
@@ -112,14 +119,14 @@ class App extends Component {
                   ...this.state.tasklist, 
                   {
                      id: `task-${this.state.tasklist.length}-${company}`, 
-                     link, company, type, status, completionDate
+                     link, company, type, status, blocked, completionDate
                   }
                ]
             }, 
          () => this.updateLocalFromState());
       }
       if(e.target.classList.contains('edit')) {
-         const updateTask = { id, link, company, type, status, completionDate };
+         const updateTask = { id, link, company, type, blocked, status, completionDate };
          this.setState(
             { tasklist: 
                [
@@ -134,15 +141,18 @@ class App extends Component {
          () => this.updateLocalFromState());
       }
       if(e.target.classList.contains('archive')) {
-         const archivedTask = { id, link, company, type };
+         this.setState(
+            { 
+               tasklist: [
+                  ...this.state.tasklist.filter(task => task.id !== id)
+               ]
+            }, 
+         () => this.updateLocalFromState());
          this.setState({
-            tasklist: [
-               ...this.state.tasklist.filter(task => task.id !== id)
-            ],
             archive: [
-               ...this.state.archive, archivedTask
+               ...this.state.archive, { type, company, link }
             ]
-         },
+         }, 
          () => this.updateLocalFromState());
       }
       if(e.target.classList.contains('delete')) {
@@ -167,15 +177,16 @@ class App extends Component {
                link: '', 
                company: '', 
                type: '', 
+               blocked: false,
                status: '',
                completionDate: `${new Date().getFullYear()}-${String(new Date().getMonth() + 1).padStart(2, '0')}-${String(new Date().getDate()).padStart(2, '0')}` 
             } 
          });
       if(action === 'edit') {
-         const { id, task, link, company, type, status, completionDate } = editableTask;
+         const { id, task, link, company, type, blocked, status, completionDate } = editableTask;
          this.setState({
             task: {
-               id, task, link, company, type, status, completionDate
+               id, task, link, company, type, blocked, status, completionDate
             }
          });
       }
@@ -187,7 +198,8 @@ class App extends Component {
          e.target.classList.contains('close') ||
          e.target.classList.contains('save') ||
          e.target.classList.contains('edit') ||
-         e.target.classList.contains('delete')) {
+         e.target.classList.contains('delete') ||
+         e.target.classList.contains('archive')) {
             e.stopPropagation();
             this.setState({ modal: 'hide', modalAction: 'hidden' });
       }
@@ -206,6 +218,37 @@ class App extends Component {
       this.updateLocalFromState();
    }
 
+   // --------------------------------------- Oh yeah the notes
+
+   copyNotes = () => {
+      let notesString = `<div><span style="font-weight: bold;">Name:</span> ${this.state.name}</div><div><span style="font-weight: bold;">Workload:</span> ${this.state.workload}</div><br />`;
+
+      this.state.tasklist.forEach(task => {
+         const date = 
+         `${new Date(task.completionDate).getDate()}/${new Date(task.completionDate).getMonth() + 1}/${new Date(task.completionDate).getFullYear()}`;
+
+         console.log(task.blocked);         
+         notesString += `
+            <div><span style="font-weight: bold;">${task.type}</span> for <span style="font-weight: bold;">${task.company}</span></div>
+            <div><span style="font-weight: bold;">Clarizen:</span> <a href="${task.link}" target="_blank">${task.link}</a> | <span style="font-weight: bold;">Due Date:</span> ${date}</div>
+            <div><span style="font-weight: bold;">Blocked:</span> ${task.blocked ? 'True' : 'False'}</div>
+            <div><span style="font-weight: bold;">Notes:</span> ${task.status}</div><br />`;
+      });
+      const newElement = document.createElement('div');
+      newElement.setAttribute('id', 'copy');
+      newElement.innerHTML = notesString.trim();
+      document.querySelector('#root').appendChild(newElement);
+      // Select
+      const selection = window.getSelection();
+      const range = document.createRange();
+      range.setStartBefore(newElement);
+      range.setEndAfter(newElement);
+      selection.removeAllRanges();
+      selection.addRange(range);
+      document.execCommand('copy');      
+      window.getSelection().removeAllRanges();
+      newElement.remove();
+   }
 
    // --------------------------------------- Lifecycle Methods
 
@@ -220,17 +263,22 @@ class App extends Component {
          this.state.workload !== this.state.ls.workload) this.updateLocalFromState();
    }
 
+   
+
    render() {
       return(
          <Fragment>
             <Modal extraClass={this.state.modal} action={this.state.modalAction} 
+               updateTask={this.updateTask}
                saveTask={this.saveTask}
                closeModal={this.closeModal} 
                task={this.state.task} />
             <div className="container">
                <h1>TaskMaster</h1>
-               <h2>Details</h2>
-               <section className="personalDetails">
+               <section>
+                  <Button text="Copy Notes" action={this.copyNotes} />
+               </section>
+               <section className="details">
                   <Input 
                      name="name" 
                      type="text"
@@ -243,38 +291,53 @@ class App extends Component {
                      options={this.workloadFields} 
                      update={this.updateState} />
                </section>
-               <section className="generalActions">
+               <section>
                   <Button 
                      text="New Task" 
                      action={() => this.createModal('create')} 
                      classes='' />
                </section>
-               <DragDropContext onDragEnd={this.handleDragEnd}>
-                  <Droppable droppableId="tasks">
-                     {(provided) => (
-                        <section className="tasklist" 
-                           {...provided.droppableProps} 
-                           ref={provided.innerRef}
-                        >
-                           {
-                              this.state.tasklist.map((task, index) => {
-                                 return (
-                                    <Draggable key={task.id} draggableId={task.id} index={index}>
-                                       {(provided) => (
-                                          <div ref={provided.innerRef} {...provided.draggableProps} {...provided.dragHandleProps}>
-                                             <TaskItem 
-                                                key={task.id}
-                                                task={task} 
-                                                openModal={this.createModal} />
-                                          </div>)}
-                                    </Draggable>
-                              )})
-                           }
-                           {provided.placeholder}
-                        </section>
-                     )}
-                  </Droppable>
-               </DragDropContext>
+               <main className="listContainer">
+                  <section className="list">
+                     <h2>Tasks</h2>
+                     <DragDropContext onDragEnd={this.handleDragEnd}>
+                        <Droppable droppableId="tasks">
+                           {(provided) => (
+                              <section className="tasklist" 
+                                 {...provided.droppableProps} 
+                                 ref={provided.innerRef}
+                              >
+                                 {
+                                    this.state.tasklist.map((task, index) => {
+                                       return (
+                                          <Draggable key={task.id} draggableId={task.id} index={index}>
+                                             {(provided) => (
+                                                <div ref={provided.innerRef} {...provided.draggableProps} {...provided.dragHandleProps}>
+                                                   <TaskItem 
+                                                      key={task.id}
+                                                      task={task} 
+                                                      openModal={this.createModal} />
+                                                </div>)}
+                                          </Draggable>
+                                    )})
+                                 }
+                                 {provided.placeholder}
+                              </section>
+                           )}
+                        </Droppable>
+                     </DragDropContext>               
+                  </section>
+                  <section className="list">
+                     <h2>Archived</h2>
+                     <section className="archiveList">
+                        {
+                           this.state.archive.length > 0 ? 
+                              this.state.archive.map(task => <ArchivedTask key={task.name} />) :
+                              'No Archived tasks'
+                        }
+                     </section>
+                  </section>
+               </main>
             </div>
          </Fragment>
       )

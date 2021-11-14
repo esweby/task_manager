@@ -3,12 +3,13 @@ import React from 'react';
 import Button from './elements/Button';
 import Input from './elements/Input';
 import Textarea from './elements/Textarea';
+import Checkbox from './elements/Checkbox';
 
 const Modal = ({ 
       action = 'hidden', 
       extraClass = 'hide',
       saveTask,
-      updateTask, 
+      updateTask,
       closeModal, 
       task }) => {
    return(
@@ -17,28 +18,37 @@ const Modal = ({
             <h2>{`${action.split('')[0].toUpperCase()}${action.slice(1)}`} Task</h2>
             <section className="task-details">
                <Input 
-                  name="link" 
-                  type="text" 
-                  placeholder="https://clarizen/1241412" 
-                  content={task.link}
-                  update={updateTask} />
-               <Input 
-                  name="company" 
-                  type="text" 
-                  placeholder="Company Name" 
-                  content={task.company}
-                  update={updateTask} />
-               <Input 
-                  name="type" 
+                  name="Task Name" 
                   type="text" 
                   placeholder="e.g. Marketo, template, JS" 
                   content={task.type}
                   update={updateTask} />
                <Input 
-                  name="completion date" 
+                  name="company Name" 
+                  type="text" 
+                  placeholder="Clevertouch" 
+                  content={task.company}
+                  update={updateTask} />
+               <Input 
+                  name="Clarizen" 
+                  type="text" 
+                  placeholder="https://clarizen/1241412" 
+                  content={task.link}
+                  update={updateTask} />
+               <Input 
+                  name="Due date" 
                   type="date" 
                   content={task.completionDate} 
                   update={updateTask} />
+               {
+                  action === 'edit' ?
+                     <Checkbox 
+                        name="Blocked" 
+                        type="checkbox" 
+                        content={task.blocked} 
+                        update={updateTask} /> 
+                     : null
+               }
                <Textarea 
                   name="status" 
                   placeholder="Please update the status" 

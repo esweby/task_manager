@@ -73,8 +73,43 @@ textarea {
    width: 100%;
 }
 
-/* Tasklist */
+/* Lists */
+.listContainer {
+   margin: 20px 0;
+   display: flex;
+   justify-content: space-around;
+}
 
+.listContainer .list {
+   width: 40%;
+   display: flex;
+   flex-flow: column;
+   align-items: center;
+   border-radius: .5rem;
+   padding: 5px;
+}
+.listContainer .list h2 {
+   margin: 0 20px;
+   align-self: flex-start;
+}
+
+/* Tasklist */
+.tasklist {
+   display: flex;
+   flex-flow: column wrap;
+   padding: 15px;
+}
+
+.tasklistItem {
+   width: 100%;
+   padding: 10px 10px 8px;
+   border: 1px solid black;
+   border-radius: .5rem;
+}
+
+.tasklistItem .details p {
+   display: inline;
+}
 
 /* Screen Modal */
 .modal {
@@ -87,4 +122,13 @@ textarea {
 
 .modal.hide {
    display: none; 
+}
+.screen {
+   width: 400px;
+   position: fixed;
+   margin: 50px calc(50% - 200px);
+   padding: 20px;
+   background-color: #fff;
+   box-shadow: 0 0 4px 6px rgba(0,0,0,0.5);
+   border-radius: .5rem;
 }

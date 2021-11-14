@@ -1,6 +1,6 @@
 import React from 'react';
 
-const Button = ({ text, action, classes}) => {
+const Button = ({ text, action, classes = ''}) => {
    return(
       <button className={`btn ${classes}`} onClick={e => {
          e.preventDefault();
