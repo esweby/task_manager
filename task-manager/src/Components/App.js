@@ -133,8 +133,19 @@ class App extends Component {
             }, 
          () => this.updateLocalFromState());
       }
+      if(e.target.classList.contains('archive')) {
+         const archivedTask = { id, link, company, type };
+         this.setState({
+            tasklist: [
+               ...this.state.tasklist.filter(task => task.id !== id)
+            ],
+            archive: [
+               ...this.state.archive, archivedTask
+            ]
+         },
+         () => this.updateLocalFromState());
+      }
       if(e.target.classList.contains('delete')) {
-         console.log(id);
          this.setState(
             { tasklist: 
                [
@@ -213,14 +224,13 @@ class App extends Component {
       return(
          <Fragment>
             <Modal extraClass={this.state.modal} action={this.state.modalAction} 
-               updateTask={this.updateTask}
                saveTask={this.saveTask}
                closeModal={this.closeModal} 
                task={this.state.task} />
             <div className="container">
                <h1>TaskMaster</h1>
                <h2>Details</h2>
-               <section className="details">
+               <section className="personalDetails">
                   <Input 
                      name="name" 
                      type="text"
@@ -233,7 +243,7 @@ class App extends Component {
                      options={this.workloadFields} 
                      update={this.updateState} />
                </section>
-               <section>
+               <section className="generalActions">
                   <Button 
                      text="New Task" 
                      action={() => this.createModal('create')} 

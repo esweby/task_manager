@@ -6,7 +6,6 @@
 html, body {
    padding: 0;
    margin: 0;
-   background-color: var(--ultraBlue-bg-color);
 }
 
 h1, h2, h3, h4, h5, h6, 
@@ -19,6 +18,7 @@ button, input, select {
 
 h1 {
    font-size: 2.25rem;
+   text-align: center;
    font-weight: 500;
    margin: 1rem 0;
 }
@@ -45,12 +45,10 @@ h3, h4 {
    max-width: 100%;
 }
 
-h1 {
-   text-align: center;
-}
 
 
 input, select, textarea {
+   width: 100%;
    font-size: 16px;
    padding: 4px 6px;
    border-radius: .5rem;
@@ -58,162 +56,35 @@ input, select, textarea {
 }
 
 textarea {
-   width: 95%;
    height: 80px;
    resize: none;
    padding: 10px;
 }
 
-/* 
-.details {
+/* Personal Details */
+.personalDetails {
    display: flex;
+   gap: 2%;
 }
-.details div {
+.personalDetails div {
    width: 49%;
-   margin: 0 0 20px 1%;
 }
-.details div:first-of-type {
-   margin: 0 1% 20px 0;
-}
-
-.details input {
+.personalDetails .input input {
    width: 100%;
-   padding-left: 10px;
 }
 
-.details select {
-   width: 100%;
-} */
+/* Tasklist */
 
-/* Related to TaskList/TaskItem Components */
 
-.tasklist {
-   margin: 10px 0 20px;
-}
-
-.tasklist-item {
-   width: 100%;
-   border: 1px solid grey;
-   border-bottom: none;
-   background-color: #fff;
-   margin-bottom: 0;
-   
-   flex-grow: 1;
-   width: auto;
-   display: grid;
-   grid-template-columns: 10% 80% 10%;
-}
-.tasklist-item:first-of-type {
-   border-top-left-radius: .5rem;
-   border-top-right-radius: .5rem;
-}
-.tasklist-item:last-of-type {
-   border-bottom-left-radius: .5rem;
-   border-bottom-right-radius: .5rem;
-   border-bottom: 1px solid grey;
-}
-
-.tasklist-item .logo {
-   display: flex;
-   justify-content: center;
-   align-items: center;
-   text-align: center;
-   border-radius: 50%;
-   width: 70px;
-   height: 70px;
-   font-size: 1.75rem;
-   font-weight: 300;
-   background-color: red;
-   margin: 5px;
-}
-
-.tasklist-item .details {
-   margin: 5px 20px;
-   display: grid;
-   grid-template-columns: repeat(5, 20%);
-}
-.tasklist-item .details .full {
-   grid-row-start: 2;
-   grid-column-start: 1;
-   grid-column-end: 6;
-}
-.tasklist-item .details h4,
-.tasklist-item .details p {
-   margin: 0;
-}
-
-.tasklist-item .btn {
-   margin-right: 30px;
-   padding: 6px 20px;
-}
-
-/* Related to Task component */
-
-.modalOpen {
-   border: none;
-}
-.modal.hide,
-.modal.hide .screen {
-   display: none;
-}
-
-.modal.show {
+/* Screen Modal */
+.modal {
    position: absolute;
-   z-index: 3;
    top: 0;
    left: 0;
    width: 100%;
    height: 100%;
-   background-color: #f1f1f1f1;
-   display: flex;
-   justify-content: center;
 }
 
-.screen {
-   width: 800px;
-   background-color: #fff;
-   border: 2px solid #f1f1f1;
-   box-shadow: 0 0 6px 4px lightgrey;
-   border-radius: .5rem;
-   padding: 20px 30px;
-   margin: auto;
-}
-.screen h2 {
-   margin: 0 0 20px;
-   font-size: 1.5rem;
-}
-
-.screen h3 {
-   font-weight: 300;
-   margin: 0 0 10px;
-}
-
-.screen .task-details {
-   display: flex;
-   flex-flow: row wrap;
-}
-.screen .task-details div {
-   width: 50%;
-}
-.screen .task-details input {
-   width: 90%;
-   padding: 8px;
-}
-
-.screen .btn:before,
-.tasklist-item .btn:before {
-	border-top: 10px solid #fff;
-}
-.screen .btn:after,
-.tasklist-item .btn:after {
-	border-bottom: 10px solid #fff;
-}
-
-.screen .actions {
-   margin: 25px 0 0;
-   display: flex;
-   justify-content:space-between;
-}
-.screen .actions .end {
-   margin-right: 33px;
+.modal.hide {
+   display: none; 
 }
