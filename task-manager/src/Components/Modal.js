@@ -5,6 +5,8 @@ import Input from './elements/Input';
 import Textarea from './elements/Textarea';
 import Checkbox from './elements/Checkbox';
 
+import { H2 } from './elements/Headers';
+
 const Modal = ({ 
       action = 'hidden', 
       extraClass = 'hide',
@@ -15,7 +17,7 @@ const Modal = ({
    return(
       <div className={`modal ${extraClass}`} onClick={e => closeModal(e)}>
          <div className="screen">
-            <h2>{`${action.split('')[0].toUpperCase()}${action.slice(1)}`} Task</h2>
+            <H2 text={`${action.split('')[0].toUpperCase()}${action.slice(1)} Task`} />
             <section className="task-details">
                <Input 
                   name="Task Name" 
@@ -58,14 +60,10 @@ const Modal = ({
             <section className="actions">
                <div>
                   <Button text='Cancel' action={e => closeModal(e)} classes="close" />
-                  {action === 'edit' ? <Button text='Delete' action={e => saveTask(e)} classes="delete" /> : null}
+                  { action === 'edit' ? <Button text='Delete' action={e => saveTask(e)} classes="delete" /> : null }
                </div>
                <div className="end">
-                  {
-                     action === 'edit' ? 
-                        <Button text='Archive' action={e => saveTask(e)} classes="archive" /> 
-                        : null
-                  }
+                  { action === 'edit' ? <Button text='Archive' action={e => saveTask(e)} classes="archive" /> : null }
                   {
                      action === 'edit' ? 
                         <Button text='Save' action={e => saveTask(e)} classes="edit"  /> : 

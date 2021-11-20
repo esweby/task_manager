@@ -4,8 +4,11 @@ const Detail = ({ detailType = 'regular', detailName = '', detailContent, extraC
    return(
       <Fragment>
          { detailType === 'link' ? 
-            <a href="{detailContent}" target="_blank">{detailName}</a> : 
-            <p>{detailContent}</p>
+            <a 
+               href={`${detailContent}`}
+               className={`${extraClass}`} 
+               target="_blank">{detailName}</a> : 
+            <p className={`${extraClass}`}>{detailContent}</p>
          }
       </Fragment>
    );

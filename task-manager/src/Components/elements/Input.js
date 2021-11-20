@@ -1,10 +1,20 @@
 import React from 'react';
 
-const Input = ({ name, type, placeholder = null, content, update }) => {
+const Input = ({ 
+   name, 
+   displayName = true, 
+   type, 
+   placeholder = null, 
+   content, 
+   update }) => {
 
    return(
       <div className="input">
-         <h3>{`${name.split('')[0].toUpperCase()}${name.slice(1)}`}</h3>
+         {
+            displayName ?
+               <h3>{`${name.split('')[0].toUpperCase()}${name.slice(1)}`}</h3> :
+               null
+         }
          <input 
             name={name} 
             type={type}
