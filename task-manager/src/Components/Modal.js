@@ -63,7 +63,7 @@ const Modal = ({
                   { action === 'edit' ? <Button text='Delete' action={e => saveTask(e)} classes="delete" /> : null }
                </div>
                <div className="end">
-                  { action === 'edit' ? <Button text='Archive' action={e => saveTask(e)} classes="archive" /> : null }
+                  {/* { action === 'edit' ? <Button text='Archive' action={e => saveTask(e)} classes="archive" /> : null } */}
                   {
                      action === 'edit' ? 
                         <Button text='Save' action={e => saveTask(e)} classes="edit"  /> : 
