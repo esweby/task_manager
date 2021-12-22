@@ -28,13 +28,13 @@ const Modal = ({
                <Input 
                   name="company Name" 
                   type="text" 
-                  placeholder="Clevertouch" 
+                  placeholder="Business Name" 
                   content={task.company}
                   update={updateTask} />
                <Input 
                   name="Clarizen" 
                   type="text" 
-                  placeholder="https://clarizen/1241412" 
+                  placeholder="https://whatever.com/" 
                   content={task.link}
                   update={updateTask} />
                <Input 
